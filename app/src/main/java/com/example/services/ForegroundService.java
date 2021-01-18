@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,8 +17,6 @@ import java.nio.channels.Channel;
 
 public class ForegroundService extends Service {
     private final String CHANNEL_ID = "ForegroundServiceNotification";
-    TextView textView;
-
 
 
     @Nullable
@@ -29,23 +28,25 @@ public class ForegroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
                 // return super.onStartCommand(intent, flags, startId);
+        String editText = intent.getStringExtra("Data");
         Intent notificationIntent = new Intent(this, MainActivity.class);
         Intent[] notificationIntents ={notificationIntent};
         PendingIntent pendingIntent = PendingIntent.getActivities(this,0,notificationIntents,0);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Foreground Service")
-                .setContentText("This is foreground service running in background")
+                .setContentText(editText)
                 .setSmallIcon(R.drawable.ic_ac_unit)
                 .setContentIntent(pendingIntent)
                 .build();
+       // startService(intent.putExtra("time", 3).putExtra("label", "Call 1") );
 
 
         startForeground(1,notification);

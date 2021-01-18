@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent service = null;
     EditText editText;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,15 +36,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         service = new Intent(this, ForegroundService.class);
 
 
-
     }
+
 
     public void onClick(View v) {
         if (v.equals(start)) {
-            Intent intent = new Intent(this,ForegroundService.class);
-            intent.putExtra("Data",editText.getText().toString());
+            service = new Intent(this,ForegroundService.class);
+            service.putExtra("Data",editText.getText().toString());
+            //startService(data);
 
-            startService(service(new Intent(this, ForegroundService.class).putExtra("DATA",findViewById(R.id.editText1))));
+          //  startService(service(new Intent(this, ForegroundService.class).putExtra("DATA",findViewById(R.id.editText1))));
             ContextCompat.startForegroundService(this,service);
 
         } else if (v.equals(stop)) {
